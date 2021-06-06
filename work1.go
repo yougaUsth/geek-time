@@ -16,15 +16,15 @@ func FetchNameById(db *sql.DB, id int) (string, error) {
 func main() {
 	// Fake DB
 	db := sql.DB{}
-
+	
 	username, err := FetchNameById(&db, 10)
 	// 在调用Dao层方法后上层对返回结果进行统一区分
-	if errors.Cause(err) == sql.ErrNoRows{
-		fmt.Printf("Data Not Found, %v \n", err)
-		fmt.Printf("%+v \n", err)
-		return
-	}
-	if err != nil {
+	if err != nil{
+		if errors.Cause(err) == sql.ErrNoRows {
+			fmt.Printf("Data Not Found, %v \n", err)
+			fmt.Printf("%+v \n", err)
+			return
+		}
 		// Deal with other errors
 	}
 	fmt.Print(username)
